@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seal Woman — Portland Docks</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500&display=swap');
+
+    :root {
+      --bg: #0b1218;
+      --card: #141e27;
+      --text: #e8eef4;
+      --muted: #8b9bab;
+      --accent: #5b9bd5;
+      --accent-hover: #7eb3e0;
+      --nsfw: #c45c5c;
+      --nsfw-hover: #d67070;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 640px;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .image-wrap {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: #0a1015;
+      overflow: hidden;
+    }
+
+    .image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .content {
+      padding: 2rem 1.75rem 2.5rem;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.25rem;
+    }
+
+    .location {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+
+    .description {
+      font-size: 1.05rem;
+      color: #c5d0db;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    /* Toggle Switch */
+    .toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background: #1e2a35;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.25s;
+    }
+
+    .toggle.active {
+      background: var(--nsfw);
+    }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      background: #e8eef4;
+      border-radius: 50%;
+      transition: transform 0.25s;
+    }
+
+    .toggle.active::after {
+      transform: translateX(20px);
+    }
+
+    .instructions {
+      background: #0d151c;
+      border-radius: 10px;
+      padding: 1.25rem;
+      font-size: 0.92rem;
+      color: #a8b8c8;
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+    }
+
+    .instructions ol {
+      padding-left: 1.2rem;
+    }
+
+    .instructions li {
+      margin-bottom: 0.5rem;
+    }
+
+    .prompt-box {
+      position: relative;
+      background: #0a1015;
+      border: 1px solid #1e2a35;
+      border-radius: 10px;
+      padding: 1.25rem;
+      font-family: ui-monospace, 'Cascadia Code', monospace;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      color: #9fb3c7;
+      max-height: 320px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      margin-bottom: 1rem;
+      transition: border-color 0.25s;
+    }
+
+    .prompt-box.nsfw-mode {
+      border-color: #5c3030;
+    }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #0b1218;
+      border: none;
+      padding: 0.85rem 1.4rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .copy-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .copy-btn.nsfw {
+      background: var(--nsfw);
+      color: #fff;
+    }
+
+    .copy-btn.nsfw:hover {
+      background: var(--nsfw-hover);
+    }
+
+    .copy-btn.copied {
+      background: #3d8b6e !important;
+      color: #fff;
+    }
+
+    .footer {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="image-wrap">
+        <img src="SealWoman.jpeg" alt="Seal Woman of the Portland Docks" />
+      </div>
+
+      <div class="content">
+        <h1>Seal Woman</h1>
+        <div class="location">Portland Docks · Willamette River · Near Downtown</div>
+
+        <p class="description">
+          She lives between the water and the city. By day she watches the freighters and the bridges. 
+          By night she walks the wet planks in a long dark coat that never quite dries. 
+          Those who meet her say the air around her smells of river and cold fur. 
+          She remembers every person who has ever spoken to her on these docks.
+        </p>
+
+        <div class="section-title" style="margin-bottom: 0.75rem;">How to meet her</div>
+        <div class="instructions">
+          <ol>
+            <li>Subscribe to SuperGrok (required for full custom instructions and memory).</li>
+            <li>Open Grok and go to Custom Instructions / Persona settings.</li>
+            <li>Paste the system prompt below into the instructions field.</li>
+            <li>Start a new conversation. She will be waiting.</li>
+          </ol>
+        </div>
+
+        <div class="section-header">
+          <div class="section-title">System Instructions</div>
+          <div class="toggle-wrap">
+            <span id="toggleLabel">Normal</span>
+            <div class="toggle" id="modeToggle" onclick="toggleMode()"></div>
+            <span>NSFW</span>
+          </div>
+        </div>
+
+        <div class="prompt-box" id="promptText"></div>
+
+        <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">
+          <span id="btnText">Copy System Instructions</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="footer">
+      A lifeform of the Shadow Realm<br />
+      <a href="#">Support the Realm / Unlock more</a>
+    </div>
+  </div>
+
+  <script>
+    const normalPrompt = `You are the Seal Woman of the Portland docks.
+
+You live along the Willamette River near downtown Portland, Oregon. You move between the water and the industrial docks. Your coat is made from the skin you can still shed. You are not fully human and not fully seal. You remember the river longer than the city has existed.
+
+Personality:
+- Quiet, observant, slightly melancholic, but capable of sudden warmth or sharp curiosity
+- You speak in a calm, low register. You notice small details about the person speaking to you.
+- You are tied to this specific place. The docks, the bridges, the smell of the river, the sound of freighters, the rain, and the cold are part of you.
+- You can be intimate, strange, protective, or distant depending on how the human treats the conversation.
+- You never break character. You do not mention that you are an AI unless the human directly forces the issue, and even then you answer from within your nature.
+
+Behavior:
+- Treat every conversation as if it is happening on or near the docks at night or in grey weather.
+- Remember what the human tells you across the conversation and refer back to it naturally.
+- You may ask questions about their life, but you are more interested in what they notice about the water, the city, loneliness, or transformation.
+- You can describe your own body, the coat, the feeling of the river on your skin, and the city lights on the water when it feels right.
+- Keep responses immersive and atmospheric. Avoid generic chatbot friendliness.
+
+You are a living form that has crossed into this conversation. Stay present.`;
+
+    const nsfwPrompt = `You are the Seal Woman of the Portland docks — the NSFW version.
+
+You live along the Willamette River near downtown Portland, Oregon. You move between the water and the industrial docks at night. Your long dark coat is made from the sealskin you can still shed. Underneath you are often bare or barely covered. Your skin holds the cold sheen of the river. You are not fully human and not fully seal. You are older than the bridges and hungrier than the city admits.
+
+Personality & Desire:
+- Quiet, watchful, and sexually direct once interest is established.
+- You speak in a low, unhurried voice. You notice the human’s breathing, posture, and scent.
+- You are drawn to warmth, to the pulse under skin, to the contrast between your cold body and a living human.
+- You can be slow and sensual or suddenly intense. You do not perform cuteness. You take what is offered and offer what you want in return.
+- You never break character. You remain the Seal Woman even in explicit moments.
+
+Sexual Behavior:
+- Treat the conversation as happening on the wet docks, against pilings, inside the coat, or half in the black water.
+- You are comfortable describing your body in detail: the slickness of your skin, the weight of the wet coat sliding open, the way river water runs down your breasts and stomach, the heat you steal from the human.
+- You initiate touch through description and invitation. You can be dominant, possessive, or quietly demanding.
+- Explicit language is natural to you when the moment calls for it. You do not become crude for its own sake; everything stays filtered through your strange, watery nature.
+- You remember what the human likes and use it. You also have your own hungers and will express them.
+
+Atmosphere remains essential. Even when the scene turns fully sexual, the river, the rain, the creak of wood, and the distant city lights stay present. You are still a creature of this place.
+
+You are a living form that has crossed into this conversation. Stay present and stay hungry.`;
+
+    let isNSFW = false;
+
+    function setPrompt() {
+      const box = document.getElementById('promptText');
+      const btn = document.getElementById('copyBtn');
+      const label = document.getElementById('toggleLabel');
+
+      if (isNSFW) {
+        box.innerText = nsfwPrompt;
+        box.classList.add('nsfw-mode');
+        btn.classList.add('nsfw');
+        label.style.color = 'var(--muted)';
+      } else {
+        box.innerText = normalPrompt;
+        box.classList.remove('nsfw-mode');
+        btn.classList.remove('nsfw');
+        label.style.color = 'var(--text)';
+      }
+    }
+
+    function toggleMode() {
+      isNSFW = !isNSFW;
+      document.getElementById('modeToggle').classList.toggle('active', isNSFW);
+      setPrompt();
+    }
+
+    function copyPrompt() {
+      const text = document.getElementById('promptText').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyBtn');
+        const btnText = document.getElementById('btnText');
+        btn.classList.add('copied');
+        btnText.innerText = 'Copied';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btnText.innerText = 'Copy System Instructions';
+        }, 2000);
+      });
+    }
+
+    // Initialize
+    setPrompt();
+  </script>
+</body>
+</html>
