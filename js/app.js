@@ -2,9 +2,13 @@ let persona = null;
 let isNSFW = false;
 
 async function loadPersona() {
+  // Look for data-persona attribute on <body>, fallback to seal-woman
+  const personaId = document.body.getAttribute('data-persona') || 'seal-woman';
+  const jsonPath = `personas/${personaId}.json`;
+
   try {
-    const res = await fetch('personas/seal-woman.json');
-    if (!res.ok) throw new Error('Failed to load persona');
+    const res = await fetch(jsonPath);
+    if (!res.ok) throw new Error('Failed to load persona: ' + jsonPath);
     persona = await res.json();
     renderPersona();
   } catch (err) {
@@ -16,14 +20,18 @@ async function loadPersona() {
 function renderPersona() {
   if (!persona) return;
 
-  document.title = persona.title;
-  document.getElementById('version').textContent = persona.version;
-  document.getElementById('name').textContent = persona.name;
-  document.getElementById('location').textContent = persona.location;
-  document.getElementById('description').textContent = persona.description;
-  document.getElementById('bridge').textContent = persona.bridge;
-  document.getElementById('charImage').src = persona.image;
-  document.getElementById('charImage').alt = persona.name + ' of the Portland Docks';
+  document.title = persona.title || persona.name;
+  document.getElementById('version').textContent = persona.version || '';
+  document.getElementById('name').textContent = persona.name || '';
+  document.getElementById('location').textContent = persona.location || '';
+  document.getElementById('description').textContent = persona.description || '';
+  document.getElementById('bridge').textContent = persona.bridge || '';
+  
+  const img = document.getElementById('charImage');
+  if (img && persona.image) {
+    img.src = persona.image;
+    img.alt = persona.name || 'Character';
+  }
 
   // Apply theme colors if provided
   if (persona.theme) {
