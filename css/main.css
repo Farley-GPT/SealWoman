@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500&display=swap');
+
+:root {
+  --bg: #070d12;
+  --card: #0f1820;
+  --text: #e2eaf1;
+  --muted: #7a8d9e;
+  --accent: #4a8db8;
+  --accent-hover: #6aa8cc;
+  --nsfw: #b85c5c;
+  --nsfw-hover: #cc7070;
+  --border: #1a2833;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.container {
+  max-width: 640px;
+  width: 100%;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.45);
+  border: 1px solid var(--border);
+}
+
+.image-wrap {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: #0a1015;
+  overflow: hidden;
+}
+
+.image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.content {
+  padding: 2rem 1.75rem 2.25rem;
+}
+
+.version {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.15rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.2rem;
+}
+
+.location {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+
+.description {
+  font-size: 1.05rem;
+  color: #c5d0db;
+  margin-bottom: 1.75rem;
+  line-height: 1.7;
+}
+
+.bridge {
+  font-size: 0.98rem;
+  color: #a8b9c9;
+  margin-bottom: 1.75rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.toggle {
+  position: relative;
+  width: 42px;
+  height: 22px;
+  background: #1a2833;
+  border-radius: 11px;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+
+.toggle.active {
+  background: var(--nsfw);
+}
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  background: #e2eaf1;
+  border-radius: 50%;
+  transition: transform 0.25s;
+}
+
+.toggle.active::after {
+  transform: translateX(20px);
+}
+
+.instructions {
+  background: #0a1218;
+  border-radius: 10px;
+  padding: 1.2rem 1.25rem;
+  font-size: 0.92rem;
+  color: #9aafc0;
+  margin-bottom: 1.5rem;
+  line-height: 1.65;
+  border: 1px solid var(--border);
+}
+
+.instructions ol {
+  padding-left: 1.15rem;
+}
+
+.instructions li {
+  margin-bottom: 0.45rem;
+}
+
+.prompt-box {
+  background: #080e13;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.2rem;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: #8fa6b8;
+  max-height: 300px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  margin-bottom: 1rem;
+  transition: border-color 0.25s;
+}
+
+.prompt-box.nsfw-mode {
+  border-color: #5a3030;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: #061018;
+  border: none;
+  padding: 0.85rem 1.4rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.copy-btn:hover {
+  background: var(--accent-hover);
+}
+
+.copy-btn.nsfw {
+  background: var(--nsfw);
+  color: #fff;
+}
+
+.copy-btn.nsfw:hover {
+  background: var(--nsfw-hover);
+}
+
+.copy-btn.copied {
+  background: #2f7a5e !important;
+  color: #fff;
+}
+
+.support {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: #8fa3b5;
+  line-height: 1.6;
+}
+
+.support a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.support a:hover {
+  text-decoration: underline;
+}
+
+.disclaimer {
+  margin-top: 1.75rem;
+  font-size: 0.72rem;
+  color: #5c6f7e;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.fireheart {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 1.4rem;
+}
